@@ -111,6 +111,6 @@ elif selected_tab == "Distrib precio":
     #Show the plot
     #fig.show()
     # Mostrar el gráfico en Streamlit
-    st.plotly_chart(fig1.show())    
+    st.plotly_chart(fig1)    
 
 
