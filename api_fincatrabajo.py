@@ -106,7 +106,7 @@ elif selected_tab == "Distrib precio":
                         zoom=9, height=500,color_continuous_scale='plotly3')
 
     #Update the map style
-    fig2.update_layout(mapbox_style='open-street-map')
+    fig1.update_layout(mapbox_style='open-street-map')
 
     # Mostrar el gráfico en Streamlit
     st.plotly_chart(fig1)    
