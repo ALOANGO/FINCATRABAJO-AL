@@ -20,7 +20,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 dataframe_total=pd.read_csv('fincaraizdatatotal.csv')
 
 #Catalogo de paginas
-selected_tab = st.sidebar.selectbox("Selecciona una pestaña:", ["Modelo", "Dataframe", "Distrib precio"])
+selected_tab = st.sidebar.selectbox("Selecciona una pestaña:", ["Modelo", "Dataframe", "Distrib precio", "Distrib tipo vivienda"])
 
 if selected_tab == "Modelo":
     
@@ -103,14 +103,32 @@ elif selected_tab == "Distrib precio":
                         size='aream2',
                         text="tipopropiedad",
                         title='DISTRIBUCION POR PRECIO',
-                        zoom=9, height=500)
+                        zoom=9, height=500,color_continuous_scale='plotly3')
 
     #Update the map style
-    fig1.update_layout(mapbox_style='open-street-map')
+    fig2.update_layout(mapbox_style='open-street-map')
 
-    #Show the plot
-    #fig.show()
     # Mostrar el gráfico en Streamlit
     st.plotly_chart(fig1)    
+
+
+elif selected_tab == "Distrib tipo vivienda":
+    st.title("Distribucion vivienda por precio")
+    st.write("A continuación se muestra un gráfico de dispersión:")
+    
+    # Generar un gráfico de dispersión usando Matplotlib
+    fig2 = px.scatter_mapbox(dataframe_total, lat=('latitud'), lon=('longitud'),
+                        hover_name="barrio",
+                        color='tipopropiedad',
+                        size='aream2',
+                        text="tipopropiedad",
+                        title='DISTRIBUCION POR TIPO DE VIVIENDA',
+                        zoom=9, height=500,color_continuous_scale='jet')
+
+    #Update the map style
+    fig2.update_layout(mapbox_style='open-street-map')
+
+    # Mostrar el gráfico en Streamlit
+    st.plotly_chart(fig2)    
 
 
