@@ -4,6 +4,9 @@ import numpy as np
 import pickle
 import plotly.express as px
 import matplotlib
+from scraping_dataframe_fr import fincaraiz
+from metrocuadrado import metrocuadrado
+import base64
 
 
 
@@ -16,11 +19,15 @@ st.set_page_config(page_title='APP FINCATRABAJO -by Andres Loango',
                    initial_sidebar_state='auto' )
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
+
+#CARGAR LOS DATAFRAMES HISTORICOS
                    
-dataframe_total=pd.read_csv('fincaraizdatatotal.csv')
+dataframe_total_fr=pd.read_csv('fincaraizdatatotal.csv')
+dataframe_total_m2=pd.read_csv('metroc2.csv')
+
 
 #Catalogo de paginas
-selected_tab = st.sidebar.selectbox("Selecciona una pestaña:", ["Modelo", "Dataframe", "Distrib precio", "Distrib tipo vivienda"])
+selected_tab = st.sidebar.selectbox("Selecciona una pestaña:", ["Modelo", "Data Finca R","Data Metro2"])
 
 if selected_tab == "Modelo":
     
@@ -71,64 +78,64 @@ if selected_tab == "Modelo":
 
 
 
-elif selected_tab == "Dataframe":
-    st.title("Tabla de Datos con Gráfico de Barras")
+elif selected_tab == "Data Finca R":
+    st.title("Datos de viviendas del departamento de Antioquia (Finca Raiz)")
     
 
-    # Deslizador para ajustar el precio de la vivienda
-    house_price = st.slider("Precio de la Vivienda", min_value=int((dataframe_total['precio'].min()))
-                            , max_value=int((dataframe_total['precio'].max())))
+    boton_1= st.button("Generar data")
 
-    # Filtrar los datos basados en el precio seleccionado
-    filtered_data = dataframe_total[dataframe_total['precio'] <= house_price]
-    st.write(f"Las dimensiones de la tabla son: {filtered_data.shape}")
-
-    # Mostrar la tabla filtrada
-    st.write("Tabla filtrada:")
-    st.dataframe(filtered_data)
-
-    # Crear un gráfico de barras interactivo utilizando Plotly
-    fig = px.bar(filtered_data, x='antiguedad', y='precio', title=f'Precios de viviendas hasta ${house_price}')
-    st.plotly_chart(fig)
-
-
-elif selected_tab == "Distrib precio":
-    st.title("Distribucion vivienda por precio")
-    st.write("A continuación se muestra un gráfico de dispersión:")
+    if boton_1:
     
-    # Generar un gráfico de dispersión usando Matplotlib
-    fig1 = px.scatter_mapbox(dataframe_total, lat=('latitud'), lon=('longitud'),
-                        hover_name="barrio",
-                        color='precio',
-                        size='aream2',
-                        text="tipopropiedad",
-                        title='DISTRIBUCION POR PRECIO',
-                        zoom=9, height=500,color_continuous_scale='plotly3')
+        #COORDENADAS CALI Y JAMUNDI
+        antioquia=[[-75.7751988,7.0938077],[-75.3140647788699,5.6973074]]
 
-    #Update the map style
-    fig1.update_layout(mapbox_style='open-street-map')
+        #DATAFRAME CASAS
+        dfantioquiahouse= fincaraiz("house",antioquia)
 
-    # Mostrar el gráfico en Streamlit
-    st.plotly_chart(fig1)    
+        #DATAFRAME APARTAMENTOS
+        dfantioquiapartment= fincaraiz("apartment",antioquia)
+
+        #CONCATENAR DATAFRAME CASAS Y APTOS
+        df= pd.concat([dataframe_total_fr,dfantioquiahouse,dfantioquiapartment])
+        df.drop_duplicates(['idpropiedad'], inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        df.to_csv('fincaraizdatatotal.csv', index=False)
+
+        # Mostrar la tabla filtrada
+        st.write(f"Tamaño de la tabla: {df.shape}")
+        st.dataframe(df)
+
+        st.download_button(
+            label="DownloadCSV",
+            data=df.to_csv(index=False),
+            file_name='fincar_df.csv',
+            mime=('text/csv'))
 
 
-elif selected_tab == "Distrib tipo vivienda":
-    st.title("Distribucion vivienda por precio")
-    st.write("A continuación se muestra un gráfico de dispersión:")
+elif selected_tab == "Data Metro2":
+    st.title("Datos de viviendas del departamento de Antioquia (Metro cuadrado)")
     
-    # Generar un gráfico de dispersión usando Matplotlib
-    fig2 = px.scatter_mapbox(dataframe_total, lat=('latitud'), lon=('longitud'),
-                        hover_name="barrio",
-                        color='tipopropiedad',
-                        size='aream2',
-                        text="tipopropiedad",
-                        title='DISTRIBUCION POR TIPO DE VIVIENDA',
-                        zoom=9, height=500,color_continuous_scale='jet')
+    boton_2= st.button("Generar data")
 
-    #Update the map style
-    fig2.update_layout(mapbox_style='open-street-map')
+    if boton_2:
+    
+        cities=["Medellin",	"Bello","Itagui",	"Envigado",	"Sabaneta",	"Estrella",	"Caldas",	"Copacabana",	"Girardota",	"Barbosa",	"Rionegro",	"Viboral",	"Retiro",	"Ceja",	"Marinilla",	"Penol",	"Guatape",	"Vicente",	"union",	"Guarne",	"Cocorna",	"Apartado",	"Turbo",	"Carepa",	"Chigorodo",	"Necocli",	"Arboletes",]
+        datametrocuadrado=metrocuadrado(cities)
 
-    # Mostrar el gráfico en Streamlit
-    st.plotly_chart(fig2)    
+        df2= pd.concat([dataframe_total_m2, datametrocuadrado])
+        df2.drop_duplicates(['propid'], inplace=True)
+        df2.reset_index(drop=True, inplace=True)
+        df2.to_csv('metroc2.csv', index=False)
+
+        # Mostrar la tabla filtrada
+        st.write(f"Tamaño de la tabla: {df2.shape}")
+        st.dataframe(df2)
+  
+        st.download_button(
+            label="DownloadCSV",
+            data=df2.to_csv(index=False),
+            file_name='fincar_df.csv',
+            mime=('text/csv'))
+
 
 
