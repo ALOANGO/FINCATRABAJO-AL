@@ -6,6 +6,7 @@ import plotly.express as px
 import matplotlib
 from scrap_total import scrap_total
 import base64
+import lxml
 
 
 
