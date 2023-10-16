@@ -5,3 +5,4 @@ streamlit==1.25.0
 plotly==5.15.0
 matplotlib==3.7.1
 beautifulsoup4==4.11.2
+python==3.11.2
