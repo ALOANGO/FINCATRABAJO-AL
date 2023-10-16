@@ -9,110 +9,147 @@ Original file is located at
 
 import requests
 import pandas as pd
+from datetime import date
 
-def metrocuadrado (cities):
+def metrocuadrado ():
 
-              def metrocuadrado_scrap(ciudad):
+              def metrocuadrado_scrap(ciudad, tipo_p):
 
                         # URL de la solicitud
-                        url = f"https://www.metrocuadrado.com/rest-search/search?realEstateBusinessList=venta&city={ciudad}&realEstateTypeList=apartamento,casa&from=0&size=50"
+                        url = f"https://www.metrocuadrado.com/rest-search/search?realEstateBusinessList=venta&city={ciudad}&realEstateTypeList={tipo_p}&from=0&size=50"
                         headers={'X-Api-Key': 'P1MfFHfQMOtL16Zpg36NcntJYCLFm8FqFfudnavl'}
                         r=requests.get(url, headers=headers)
 
 
                         datacruda=r.json()["results"]
 
-                        area=[]
+                        aream2=[]
                         cuartos=[]
-                        titulo=[]
-                        oferta=[]
+                        antiguedad=[]
+                        piso=[]
                         garajes=[]
-                        tocadores=[]
-                        precio=[]
-                        vlradmin=[]
-                        vlrarriendo=[]
-                        tipoinmueble=[]
-                        nombrecontructor=[]
-                        nombreproyecto=[]
-                        barrio=[]
-                        comuna=[]
+                        toilets=[]
+                        estrato=[]
                         ciudad=[]
+                        admon=[]
                         zona=[]
-                        propid=[]
-                        contactnumber=[]
-                        estadoinmueble=[]
-                        idempresa=[]
+                        barrio=[]
+                        tipopropiedad=[]
+                        idpropiedad=[]
+                        precio=[]
+                        enunciado=[]
                         descripcion=[]
-                        link=[]
+                        nombrevendedor=[]
+                        punto=[]
+                        links=[]
+                        oferta=[]
+                        companyname=[]
+                        apellidovendedor=[]
+                        tipocliente=[]
+                        depto=[]
+                        direccion=[]
+                        fecha=[]
+                        fuente=[]
+                        longitud=[]
+                        latitud=[]
 
 
                         for e in datacruda:
                           try:
-                              area.append(e.get('marea',None))
+                              aream2.append(e.get('marea',None))
                               cuartos.append(e['mnrocuartos'])
-                              titulo.append(e['title'])
+                              enunciado.append(e['title'])
                               oferta.append(e['mtiponegocio'])
                               garajes.append(e['mnrogarajes'])
-                              tocadores.append(e['mnrobanos'])
+                              toilets.append(e['mnrobanos'])
                               precio.append(e['mvalorventa'])
-                              vlradmin.append(e.get('data', {}).get('mvaloradministracion', None))
-
-                              vlrarriendo.append(e['mvalorarriendo'])
-                              tipoinmueble.append(e['mtipoinmueble']['nombre'])
-                              nombrecontructor.append(e['mnombreconstructor'])
-                              nombreproyecto.append(e['mnombreproyecto'])
+                              admon.append(e.get('data', {}).get('mvaloradministracion', None))
+                              tipopropiedad.append(e['mtipoinmueble']['nombre'])
+                              nombrevendedor.append(e['mnombreconstructor'])
+                              companyname.append(e['mnombreproyecto'])
                               barrio.append(e['mbarrio'])
-                              comuna.append(e['mnombrecomunbarrio'])
+                              direccion.append(e['mnombrecomunbarrio'])
                               ciudad.append(e['mciudad']['nombre'])
-                              propid.append(e['midinmueble'])
-                              contactnumber.append(e['contactPhone'])
-                              estadoinmueble.append(e['mestadoinmueble'])
-                              idempresa.append(e['midempresa'])
+                              idpropiedad.append(e['midinmueble'])
+                              apellidovendedor.append(e['contactPhone'])
+                              antiguedad.append(e['mestadoinmueble'])
                               descripcion.append(e['data']['murldetalle'])
-                              link.append(e['data']['murldetalle'])
+                              links.append(e['data']['murldetalle'])
                               zona.append(e['mzona']['nombre'])
+
+                              depto.append("Antioquia")
+                              piso.append(0)
+                              estrato.append(0)
+                              tipocliente.append("PRIVATE")
+                              punto.append("null")
+                              longitud.append("null")
+                              latitud.append("null")
+                              fecha.append(date.today())
+                              fuente.append("Metrocuadrado")
 
                           except:
                               zona.append("null")
+                              depto.append("Antioquia")
+                              piso.append(0)
+                              estrato.append(0)
+                              tipocliente.append("PRIVATE")
+                              punto.append("null")
+                              longitud.append("null")
+                              latitud.append("null")
+                              fecha.append(date.today())
+                              fuente.append("Metrocuadrado")
 
 
 
 
-                        df={'area':area,
-                            'cuartos':cuartos,
-                            'titulo':titulo,
-                            'oferta':oferta,
-                            'garajes':garajes,
-                            'tocadores':tocadores,
-                            'precio':precio,
-                            'vlradmin':vlradmin,
-                            'vlrarriendo':vlrarriendo,
-                            'tipoinmueble':tipoinmueble,
-                            'nombrecontructor':nombrecontructor,
-                            'nombreproyecto':nombreproyecto,
-                            'barrio':barrio,
-                            'comuna':comuna,
-                            'ciudad':ciudad,
-                            'zona':zona,
-                            'propid':propid,
-                            'contactnumber':contactnumber,
-                            'estadoinmueble':estadoinmueble,
-                            'idempresa':idempresa,
-                            'descripcion':descripcion,
-                            'link':link}
+
+                        df={  "aream2":aream2,
+                              "cuartos":cuartos,
+                              "antiguedad":antiguedad,
+                              "piso":piso,
+                              "enunciado":enunciado,
+                              "oferta":oferta,
+                              "garajes":garajes,
+                              "toilets":toilets,
+                              "estrato":estrato,
+                              "precio":precio,
+                              "companyname":companyname,
+                              "nombrevendedor":nombrevendedor,
+                              "apellidovendedor":apellidovendedor,
+                              "tipocliente":tipocliente,
+                              "tipopropiedad":tipopropiedad,
+                              "barrio":barrio,
+                              "ciudad":ciudad,
+                              "admon":admon,
+                              "depto":depto,
+                              "direccion":direccion,
+                              "zona":zona,
+                              "idpropiedad":idpropiedad,
+                              "punto":punto,
+                              "longitud":longitud,
+                              "latitud":latitud,
+                              "descripcion":descripcion,
+                              "fecha":fecha,
+                              "links":links,
+                              "fuente":fuente}
 
                         dfconsolidado=pd.DataFrame(df)
+                        dfconsolidado["precio"]=pd.to_numeric(dfconsolidado["precio"], errors='ignore')
+                        
 
                         #Organizar columna de link
-                        dfconsolidado["link"]="https://www.metrocuadrado.com"+dfconsolidado.descripcion
+                        dfconsolidado["links"]="https://www.metrocuadrado.com"+dfconsolidado.descripcion
 
                         return dfconsolidado
 
+              cities=["Medellin",	"Bello","Itagui",	"Envigado",	"Sabaneta",	"Estrella",	"Caldas",	"Copacabana",	"Girardota",	"Barbosa",	"Rionegro",	"Viboral",	"Retiro",	"Ceja",	"Marinilla",	"Penol",	"Guatape",	"Vicente",	"union",	"Guarne",	"Cocorna",	"Apartado",	"Turbo",	"Carepa",	"Chigorodo",	"Necocli",	"Arboletes",]
+              tipo_prop=['apartamento','casa','oficina','finca','bodega','local%20comercial','lote%20o%20casalote']
               dfs=[]
 
-              for c in cities:
+              for c in cities :
                 try:
-                 dfs.append(metrocuadrado_scrap(c))
+                 for  s in tipo_prop:
+                   dfs.append(metrocuadrado_scrap(c,s))
                 except:
                   continue
 
@@ -122,12 +159,16 @@ def metrocuadrado (cities):
 
 
               #eliminar duplicados de columna propid
-              dfdefinit.drop_duplicates(['propid'], inplace=True)
+              dfdefinit.drop_duplicates(['idpropiedad'], inplace=True)
               dfdefinit.reset_index(drop=True, inplace=True)
 
+              def format_currency(value):
+                try:
+                    return '${:,.0f}'.format(float(value))
+                except (ValueError, TypeError):
+                    return value  # Devuelve el valor original si no se puede convertir a un número
+        
+              dfdefinit["precio"]=dfdefinit["precio"].apply(format_currency)
+              dfdefinit["tipopropiedad"]=dfdefinit["tipopropiedad"].str.strip()
+
               return dfdefinit
-
-cities=["Medellin",	"Bello","Itagui",	"Envigado",	"Sabaneta",	"Estrella",	"Caldas",	"Copacabana",	"Girardota",	"Barbosa",	"Rionegro",	"Viboral",	"Retiro",	"Ceja",	"Marinilla",	"Penol",	"Guatape",	"Vicente",	"union",	"Guarne",	"Cocorna",	"Apartado",	"Turbo",	"Carepa",	"Chigorodo",	"Necocli",	"Arboletes",]
-datametrocuadrado=metrocuadrado(cities)
-
-datametrocuadrado.to_csv("metroc2.csv", index=False)
