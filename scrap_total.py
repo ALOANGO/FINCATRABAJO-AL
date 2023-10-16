@@ -12,6 +12,7 @@ from fincaprueba import fincaraiz
 from metrocuadrado import metrocuadrado
 from realityserver import realityserver
 from lonja import lonja
+from bs4 import BeautifulSoup
 
 def scrap_total():
 
