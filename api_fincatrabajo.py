@@ -28,8 +28,24 @@ df=pd.read_csv("data_contatenada.csv", sep=',')
 
 barra_lateral=st.sidebar
 #seleccion_pagina = barra_lateral.checkbox("Selecciona una pestaña:", ["Propiedades en venta", "Modelo"])
-paginas= ["Propiedades Antioquia 🏠", "Modelo 🧮"]
+paginas= ["Inicio","Propiedades Antioquia 🏠", "Modelo 🧮"]
 pagina=barra_lateral.radio('Seleccione una pagina :',paginas)
+
+
+
+if pagina=="Inicio":
+    st.write("# FINCA - TRABAJO App👋")
+
+    
+
+    st.markdown(
+        """
+        Esta aplicación realiza web scraping a varias plataformas, actualizando el Dataframe existente.
+        Tambien consta de un modelo que predice el precio de una vivienda, basado en sus principales caractericas 
+        """
+    )
+
+
 
 
 if pagina=="Propiedades Antioquia 🏠":
@@ -42,7 +58,7 @@ if pagina=="Propiedades Antioquia 🏠":
     #st.dataframe(df)
 
 
-    
+    barra_lateral.success("FILTROS")
 
     fuentes_disponibles = df['fuente'].unique()
     fuentes_seleccionadas = barra_lateral.multiselect("Fuente", fuentes_disponibles)
