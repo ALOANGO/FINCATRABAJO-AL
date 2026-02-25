@@ -23,7 +23,7 @@ Se proporcionan insights y recomendaciones en las siguientes áreas clave:
 La base de datos analizada consolida la información capturada del portal inmobiliario. La descripción de los componentes principales es la siguiente:
 * **Variable Objetivo:** Precio de venta de la vivienda.
 * **Características Físicas:** Área total, número de habitaciones, baños y garajes.
-* **Características del Anuncio:** Zona de ubicación, antigüedad y altura (pisos).
+* **Características del Anuncio:** Zona de ubicación, antigüedad y altura (pisos). 
 
 ---
 
