@@ -49,18 +49,14 @@ Tras completar el ciclo de análisis con un **95% de confianza** en el método, 
 
 ---
 
-## 5. Recomendaciones
-Con base en los insights y hallazgos, se recomienda al equipo de analistas e inversionistas considerar lo siguiente:
-* **Priorización de Metraje:** Dado que el área es el principal predictor de precio, los esfuerzos de inversión deben centrarse en el metraje total por encima de la ubicación geográfica específica.
-* **Valorización por Garajes:** Considerar el número de garajes como un factor crítico de valorización, dada su alta correlación con el precio final.
-* **Revisión de Tasación:** No penalizar ni sobrevalorar inmuebles basándose únicamente en la antigüedad o la zona, ya que los datos sugieren que estos factores no son determinantes en este mercado.
-
+## 5. Recomendaciones y productivizaciòn
+Se crea una app en Streamlit , la cual realiza web scraping a varias plataformas de viviendas, actualizando con esta informacion un dataset existente. La app tambien consta de un modelo de machine learning que predice el precio de una vivienda basado en sus caracteristicas. [Link de la App](https://fincatrabajoapp-kcxvpmtckmqzd9mcupd3k4.streamlit.app/)
 ---
 
 ## 6. Supuestos y Consideraciones
 A lo largo del análisis, se realizaron los siguientes supuestos para manejar los datos:
 * **Confianza Estadística:** Todas las conclusiones se presentan con un nivel de confianza del **95%**.
-* **Origen de Datos:** Se asume que los datos capturados vía scraping de Mercadolibre son representativos de la oferta actual del mercado en Cali.
+* **Origen de Datos:** Se asume que los datos capturados vía webscraping son representativos de la oferta actual del mercado en Antioquia.
 * **Relación de Variables:** Se reconoce que, aunque existe una mayor correlación entre el precio y el tamaño, correlación no implica necesariamente causalidad en todos los casos.
 
 ---
