@@ -50,7 +50,7 @@ Tras completar el ciclo de análisis con un **95% de confianza** en el método, 
 ---
 
 ## 5. Recomendaciones y productivizaciòn
-Se crea una app en Streamlit , la cual realiza web scraping a varias plataformas de viviendas, actualizando con esta informacion un dataset existente. La app tambien consta de un modelo de machine learning que predice el precio de una vivienda basado en sus caracteristicas. [Link de la App](https://fincatrabajoapp-kcxvpmtckmqzd9mcupd3k4.streamlit.app/)
+Se crea en Streamlit una app que realiza web scraping a diversas plataformas de vivienda, actualizando con esta informacion un dataset existente. La app tambien consta de un modelo de machine learning que predice el precio de una vivienda basado en sus caracteristicas.  [Link de la App](https://fincatrabajoapp-kcxvpmtckmqzd9mcupd3k4.streamlit.app/)                  
 ---
 
 ## 6. Supuestos y Consideraciones
